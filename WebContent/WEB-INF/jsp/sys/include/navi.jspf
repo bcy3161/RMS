@@ -1,0 +1,54 @@
+<%@ page pageEncoding="utf-8"%>
+
+<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+	<div class="navbar-header">
+	    <a class="navbar-brand">신화명 아구찜</a>
+	</div>
+	<!-- Start Side Menu -->
+	<div class="navbar-default sidebar" role="navigation">
+	    <div class="sidebar-nav navbar-collapse">
+	        <ul class="nav" id="side-menu">
+	        	<!-- 메인 -->
+	            <li>
+	                <a href="/comm/main/main.do"><i class="fa fa-dashboard fa-fw"></i> 메인</a>
+	            </li>
+	            <!-- Start 주문 -->
+	            <li>
+	                <a href="/order/order/order.do"><i class="fa fa-table fa-fw"></i> 주문</a>
+	            </li>
+	            <!-- End 주문 -->
+	            <!-- Start 매출관리 -->
+	            <li>
+	                <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> 매출 관리<span class="fa arrow"></span></a>
+	                <ul class="nav nav-second-level">
+	                    <li>
+	                        <a href="#">일 매출</a>
+	                    </li>
+	                    <li>
+	                        <a href="#">월 매출</a>
+	                    </li>
+	                    <li>
+	                        <a href="#">요일별 매출</a>
+	                    </li>
+	                    <li>
+	                        <a href="#">메뉴별 매출</a>
+	                    </li>
+	                </ul>
+	            </li>
+	            <!-- End 매출관리 -->
+	            <!-- Start 가계부 -->
+	            <li>
+	                <a href="#"><i class="fa fa-edit fa-fw"></i> 가계부</a>
+	            </li>
+	            <!-- End 가계부 -->
+	            <!-- Start 회원관리 -->
+	            <li>
+	                <a href="#"><i class="fa fa-wrench fa-fw"></i> 회원 관리</a>
+	            </li>
+				<!-- End 회원관리 -->
+	        </ul>
+	    </div>
+	    <!-- /.sidebar-collapse -->
+	</div>
+	<!-- End Side Menu -->
+</nav>

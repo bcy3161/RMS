@@ -1,0 +1,57 @@
+<%@ page pageEncoding="utf-8" session="true" %>
+
+<!-- ---------- Import Tag Library ---------- -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<!-- --------- / Import Tag Library --------- -->
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="Cache-Control" content="no-cache; no-store; no-save">
+
+<!------------------------------------- Bootstrap Import Files ------------------------------------->
+<!-- Bootstrap Core CSS -->
+<link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Theme CSS -->
+<link href="/resources/css/sb-admin.css" rel="stylesheet">
+
+<!-- Custom Fonts -->
+<link href="/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<!-------------------------------------------------------------------------------------------------->
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="/resources/css/jquery-ui.css">
+
+<!-- jQuery -->
+<script src="/resources/js/jquery.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="/resources/js/bootstrap.min.js"></script>
+
+<!-- Theme JS -->
+<script src="/resources/js/metisMenu.min.js"></script>
+<script src="/resources/js/sb-admin-2.js"></script>
+
+<script src="/resources/js/com.js" type="text/javascript"></script>
+
+
+
+<style type="text/css">
+
+</style>
+
+
+<script type="text/javascript">
+
+function handleError(err, url, line) {
+	alert('Error : ' + err + '\nURL: ' + url + '\nLine:' + line);
+	return true;
+}
+window.onerror = handleError;
+
+
+</script>
