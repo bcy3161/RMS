@@ -21,7 +21,7 @@
 			<!-- Start Subtitle -->
 			<div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">신화명아구찜</h1>
+                    <h1 class="page-header">신화명 아구찜</h1>
                 </div>
             </div>
             <!-- End Subtitle -->
@@ -36,13 +36,13 @@
                                     <i class="fa fa-shopping-cart fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">124</div>
+                                    <div class="huge">${today_cnt }건</div>
                                     <div>금일 주문</div>
                                 </div>
                             </div>
                         </div>
                         <!-- 일매출 로 링크 -->
-                        <a href="#">
+                        <a href="/sales/salesDaily/salesDaily.do">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -60,12 +60,12 @@
                                     <i class="fa fa-bar-chart-o fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">26</div>
+                                    <div class="huge">26만</div>
                                     <div>월 매출</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="/sales/salesMonthly/salesMonthly.do">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -106,12 +106,12 @@
                                     <i class="fa fa-wrench fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">13</div>
+                                    <div class="huge">${cust_cnt }</div>
                                     <div>회원관리</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="/custom/custom/customer.do">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

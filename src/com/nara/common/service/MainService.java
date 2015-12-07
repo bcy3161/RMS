@@ -1,16 +1,17 @@
 package com.nara.common.service;
 
-import java.util.List;
+
 import java.util.Map;
+
+import com.nara.common.dao.MainDao;
 
 
 public interface MainService {
+	
+	public void setMainDao(MainDao mainDao);
 
-	public String getToday();
+	public int getTodaySalesCnt(Map<String, Object> paramMap);
 	
-	public int writeProc(Map<String, Object> paramMap);
+	public int getCustomerCnt(Map<String, Object> paramMap);
 	
-	//public int writeProc2(Board board);
-	
-	public List getList(Map<String, Object> paramMap);
 }

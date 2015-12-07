@@ -23,6 +23,20 @@
 		</property>
 	</bean>
 
+	<bean id="salesService" class="com.nara.sales.service.SalesServiceImpl">
+		<property name="salesDao">
+			<bean class="com.nara.sales.dao.SalesDaoImpl">
+				<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+			</bean>
+		</property>
+	</bean>
 	
+	<bean id="customService" class="com.nara.custom.service.CustomServiceImpl">
+		<property name="customDao">
+			<bean class="com.nara.custom.dao.CustomDaoImpl">
+				<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+			</bean>
+		</property>
+	</bean>
 	
 </beans>

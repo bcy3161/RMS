@@ -1,8 +1,11 @@
 package com.nara.order.dao;
 
+import java.util.List;
+import java.util.Map;
+
 
 public interface OrderDao {
-
-	public String getUserPwd(String userid);
+	
+	public List getMenuList(Map<String, Object> paramMap);
 	
 }

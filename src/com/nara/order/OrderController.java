@@ -1,6 +1,7 @@
 package com.nara.order;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -28,13 +29,11 @@ public class OrderController {
 	
 	@RequestMapping("/order/order")
 	public void order(@RequestParam Map<String, Object> paramMap, ModelMap model, Principal principal) throws Throwable {
+
+		log.info("map : " + paramMap.toString());
 		
-		// 메뉴 번호 세팅
-		String menu_id = SoftUtil.print((String)paramMap.get("menu_id"));
-		// 메뉴 번호 없으면 1세팅
-		if("".equals(menu_id)) menu_id = "0";
-		
-		model.addAttribute("menu_id", menu_id);
+		List menuList = orderService.getMenuList(paramMap);
+		model.addAttribute("menuList",menuList);
 		
 	}
 	

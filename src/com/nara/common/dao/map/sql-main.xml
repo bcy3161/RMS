@@ -2,10 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
 
 <mapper namespace="main">
-
-	<select id="getUserPwd" parameterType="java.lang.String" resultType="java.lang.String">
-	  select user_pw from comm_user where user_id = #{userid}
-	</select>	
+	
+	<!-- get toDay's Sales count for main summary -->
+	<select id="getTodaySalesCnt" parameterType="java.util.Map" resultType="Integer">
+		select
+			count(*)
+		from sales
+		where
+			sales_date = to_char(sysdate,'YYMMDD')
+	</select>
+	
+	<!-- get Customer count for main summary -->
+	<select id="getCustomerCnt" parameterType="java.util.Map" resultType="Integer">
+		select 
+			count(*)
+		from customer
+	</select>
 	
 </mapper>
 

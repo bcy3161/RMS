@@ -1,6 +1,5 @@
 package com.nara.common.service;
 
-import java.util.List;
 import java.util.Map;
 
 import com.nara.common.dao.MainDao;
@@ -15,19 +14,21 @@ public class MainServiceImpl implements MainService {
 		this.mainDao = mainDao;
 	}
 
-	
-	public String getToday() {
-//		return mainDao.getToday();
-		return null;
+	/**
+	 * get toDay's Sales count for main summary
+	 * */
+	public int getTodaySalesCnt(Map<String, Object> paramMap){
+		int ret = mainDao.getTodaySalesCnt(paramMap);
+		
+		return ret;
 	}
 	
-	public int writeProc(Map<String, Object> paramMap) {
-//		return mainDao.writeProc(paramMap);
-		return 0;
-	}
-	
-	public List getList(Map<String, Object> paramMap) {
-//		return mainDao.getList(paramMap);
-		return null;
+	/**
+	 * get Customer count for main summary
+	 * */
+	public int getCustomerCnt(Map<String, Object> paramMap){
+		int ret = mainDao.getCustomerCnt(paramMap);
+		
+		return ret;
 	}
 }

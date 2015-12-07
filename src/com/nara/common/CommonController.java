@@ -1,6 +1,7 @@
 package com.nara.common;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -28,13 +29,13 @@ public class CommonController {
 	@RequestMapping("/main/main")
 	public void main(@RequestParam Map<String, Object> paramMap, ModelMap model, Principal principal) throws Throwable {
 		
-		// 메뉴 번호 세팅
-		String menu_id = SoftUtil.print((String)paramMap.get("menu_id"));
-		// 메뉴 번호 없으면 1세팅
-		if("".equals(menu_id)) menu_id = "0";
-		
-		model.addAttribute("menu_id", menu_id);
-		
+		log.info("map : " + paramMap.toString());
+
+		int today_cnt = mainService.getTodaySalesCnt(paramMap);
+		int cust_cnt = mainService.getCustomerCnt(paramMap);
+
+		model.put("today_cnt", today_cnt);
+		model.put("cust_cnt", cust_cnt);
 	}
 	
 }

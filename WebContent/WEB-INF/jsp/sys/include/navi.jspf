@@ -22,10 +22,10 @@
 	                <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> 매출 관리<span class="fa arrow"></span></a>
 	                <ul class="nav nav-second-level">
 	                    <li>
-	                        <a href="#">일 매출</a>
+	                        <a href="/sales/salesDaily/salesDaily.do">일 매출</a>
 	                    </li>
 	                    <li>
-	                        <a href="#">월 매출</a>
+	                        <a href="/sales/salesMonthly/salesMonthly.do">월 매출</a>
 	                    </li>
 	                    <li>
 	                        <a href="#">요일별 매출</a>
@@ -43,7 +43,7 @@
 	            <!-- End 가계부 -->
 	            <!-- Start 회원관리 -->
 	            <li>
-	                <a href="#"><i class="fa fa-wrench fa-fw"></i> 회원 관리</a>
+	                <a href="/custom/custom/customer.do"><i class="fa fa-wrench fa-fw"></i> 회원 관리</a>
 	            </li>
 				<!-- End 회원관리 -->
 	        </ul>

@@ -1,8 +1,10 @@
 package com.nara.common.dao;
 
+import java.util.Map;
+
 
 public interface MainDao {
 
-	public String getUserPwd(String userid);
-	
+	public int getTodaySalesCnt(Map<String, Object> paramMap);
+	public int getCustomerCnt(Map<String, Object> paramMap);
 }

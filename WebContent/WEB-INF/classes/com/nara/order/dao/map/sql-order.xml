@@ -3,9 +3,15 @@
 
 <mapper namespace="order">
 
-	<select id="getUserPwd" parameterType="java.lang.String" resultType="java.lang.String">
-	  select user_pw from comm_user where user_id = #{userid}
-	</select>	
+	<!-- get Menu List for filling Option -->
+	<select id="getMenuList" parameterType="java.util.Map" resultType="java.util.HashMap">
+		select 
+			menu_no	as	menu_no,
+			menu_name	as	menu_name,
+			menu_size	as	menu_size,
+			menu_cost	as	menu_cost
+		from menu
+	</select>
 	
 </mapper>
 

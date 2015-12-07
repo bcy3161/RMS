@@ -16,4 +16,13 @@ public class OrderServiceImpl implements OrderService {
 		this.orderDao = orderDao;
 	}
 
+	/**
+	 * get Menu List for option
+	 * */
+	public List getMenuList(Map<String, Object> paramMap){
+		List ret = orderDao.getMenuList(paramMap);
+		
+		return ret;
+	}
+	
 }
