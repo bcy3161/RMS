@@ -10,7 +10,22 @@
 			menu_name	as	menu_name,
 			menu_size	as	menu_size,
 			menu_cost	as	menu_cost
-		from menu
+		from
+			menu
+	</select>
+	
+	<!-- get Customer Infomation -->
+	<select id="getCustomerInfo" parameterType="java.util.Map" resultType="java.util.HashMap">
+		select
+			cust_no	as	cust_no,
+			address	as	address,
+			phone	as	phone
+		from
+			customer
+		where
+			address	=	#{address, jdbcType=VARCHAR, javaType=String}
+			or
+			phone	=	#{phone, jdbcType=VARCHAR, javaType=String}
 	</select>
 	
 </mapper>

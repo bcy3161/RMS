@@ -16,5 +16,22 @@ public class SalesServiceImpl implements SalesService {
 	public void setSalesDao(SalesDao salesDao) {
 		this.salesDao = salesDao;
 	}
-
+	
+	/**
+	 * get Daily Sales List
+	 * */
+	public List getDailyList(Map<String, Object> paramMap){
+		List ret = salesDao.getDailyList(paramMap);
+		
+		return ret;
+	}
+	
+	/**
+	 * get Monthly Sales List
+	 * */
+	public List getMonthlyList(Map<String, Object> paramMap){
+		List ret = salesDao.getMonthlyList(paramMap);
+		
+		return ret;
+	}
 }

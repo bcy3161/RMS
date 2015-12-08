@@ -12,6 +12,19 @@
 		from customer
 	</select>
 	
+	<!-- add New Customer -->
+	<insert id="addNewCustomer" parameterType="com.nara.custom.vo.AddCustom">
+		<selectKey order="BEFORE" keyProperty="cust_no" resultType="int">
+			select 
+				nvl(max(to_number(cust_no)),0)+1
+			from
+				customer
+		</selectKey>
+		insert into customer
+			(cust_no, address, phone)
+		values
+			(#{cust_no}, #{address}, #{phone})
+	</insert>
 </mapper>
 
 

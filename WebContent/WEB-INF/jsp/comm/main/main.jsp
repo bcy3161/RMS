@@ -7,6 +7,37 @@
 	<title>신화명 아구찜</title>
 	<!-- Include head file -->
 	<%@ include file="/WEB-INF/jsp/sys/include/head.jspf" %>
+	<script>
+	$(document).ready(function() {
+	    $('#dataTables-Daily').DataTable( {
+	    	"paging":   false,
+	        "footerCallback": function ( row, data, start, end, display ) {
+	            var api = this.api(), data;
+	 
+	            // Remove the formatting to get integer data for summation
+	            var intVal = function ( i ) {
+	                return typeof i === 'string' ?
+	                    i.replace(/[\$,]/g, '')*1 :
+	                    typeof i === 'number' ?
+	                        i : 0;
+	            };
+	 
+	            // Total over all pages
+	            total = api
+	                .column( 4 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	 
+	            // Update footer
+	            $( api.column( 4 ).footer() ).html(
+	                total +' 원'
+	            );
+	        }
+	    } );
+	} );
+	</script>
 </head>
 <!-- End Head -->
 <!-- Start Body -->
@@ -60,7 +91,7 @@
                                     <i class="fa fa-bar-chart-o fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">26만</div>
+                                    <div class="huge">${sales_sum }원</div>
                                     <div>월 매출</div>
                                 </div>
                             </div>
@@ -122,144 +153,75 @@
                 </div>
             </div>
             <!-- End summary -->
+            <!-- Start Contents -->
 			<div class="row">
                 <div class="col-lg-12">
+                	<!-- Start Today List -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Area Chart Example
-                            <div class="pull-right">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                        Actions
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu pull-right" role="menu">
-                                        <li><a href="#">Action</a>
-                                        </li>
-                                        <li><a href="#">Another action</a>
-                                        </li>
-                                        <li><a href="#">Something else here</a>
-                                        </li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Separated link</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                            <i class="fa fa-shopping-cart fa-fw"></i> 금일 주문
                         </div>
-                        <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <div id="morris-area-chart"></div>
+                        	<div class="dataTable_wrapper">
+								<table class="table table-striped table-bordered table-hover" id="dataTables-Daily">
+									<thead>
+							            <tr>
+							                <th>순번</th>
+							                <th>주소</th>
+							                <th>전화번호</th>
+							                <th>메뉴</th>
+							                <th>매출</th>
+							            </tr>
+							        </thead>
+							        <tfoot>
+							            <tr>
+							                <th colspan="4" style="text-align:right">Total:</th>
+							                <th></th>
+							            </tr>
+							        </tfoot>
+							        <tbody>
+							        	<c:forEach items="${today_list }" var="result" varStatus="status">
+							        		<tr>
+							        			<td>
+							        				${result.SALES_NO }
+							        			</td>
+							        			<td>
+							        				${result.CUST_NO }
+							        			</td>
+							        			<td>
+							        				${result.CUST_NO }
+							        			</td>
+							        			<td>
+							        				${result.MENU_NO }
+							        			</td>
+							        			<td>
+							        				${result.COST_SUM }
+							        			</td>
+							        		</tr>
+							        	</c:forEach>
+							        </tbody>
+							    </table>
+                            </div>
                         </div>
-                        <!-- /.panel-body -->
                     </div>
-                    <!-- /.panel -->
+                    <!-- End Today List -->
+                    <!-- Start Daily Sum -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Bar Chart Example
-                            <div class="pull-right">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                        Actions
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu pull-right" role="menu">
-                                        <li><a href="#">Action</a>
-                                        </li>
-                                        <li><a href="#">Another action</a>
-                                        </li>
-                                        <li><a href="#">Something else here</a>
-                                        </li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Separated link</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                            <i class="fa fa-bar-chart-o fa-fw"></i> 일별 통계
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-hover table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Date</th>
-                                                    <th>Time</th>
-                                                    <th>Amount</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>3326</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>3:29 PM</td>
-                                                    <td>$321.33</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3325</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>3:20 PM</td>
-                                                    <td>$234.34</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3324</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>3:03 PM</td>
-                                                    <td>$724.17</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3323</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>3:00 PM</td>
-                                                    <td>$23.71</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3322</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>2:49 PM</td>
-                                                    <td>$8345.23</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3321</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>2:23 PM</td>
-                                                    <td>$245.12</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3320</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>2:15 PM</td>
-                                                    <td>$5663.54</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3319</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>2:13 PM</td>
-                                                    <td>$943.45</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <!-- /.table-responsive -->
-                                </div>
-                                <!-- /.col-lg-4 (nested) -->
-                                <div class="col-lg-8">
-                                    <div id="morris-bar-chart"></div>
-                                </div>
-                                <!-- /.col-lg-8 (nested) -->
                             </div>
                             <!-- /.row -->
                         </div>
                         <!-- /.panel-body -->
                     </div>
-                    <!-- /.panel -->
-                   
+                    <!-- End Daily Sum -->
                 </div>
-                <!-- /.col-lg-4 -->
             </div>
+            <!-- End COntents -->
 		</div>
 		<!-- End Contents -->
 	</div>

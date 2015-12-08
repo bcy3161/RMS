@@ -10,6 +10,16 @@
 	
 	<!-- Page-Level Demo Scripts - Tables - Use for reference -->
 	<script>
+	
+	function actSubmit(frm, url)
+	{
+		frm.method = 'post';
+		frm.action = url;
+	}
+	function fnSubmit() {
+		actSubmit(document.aform, '/sales/salesMonthly/salesMonthly.do');
+	}
+	
 	$(document).ready(function() {
 	    $('#dataTables-Daily').DataTable( {
 	    	"paging":   false,
@@ -26,14 +36,14 @@
 	 
 	            // Total over all pages
 	            total = api
-	                .column( 4 )
+	                .column( 5 )
 	                .data()
 	                .reduce( function (a, b) {
 	                    return intVal(a) + intVal(b);
 	                }, 0 );
 	 
 	            // Update footer
-	            $( api.column( 4 ).footer() ).html(
+	            $( api.column( 5 ).footer() ).html(
 	                total +' 원'
 	            );
 	        }
@@ -44,7 +54,7 @@
 	* For Date Picker
 	*/
 	$(function(){
-		$('#datepicker').datepicker({
+		$('#sdate').datepicker({
 			dateFormat: 'yy-mm',
 			monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 			dayNamesMin:['일','월','화','수','목','금','토'],
@@ -86,20 +96,24 @@
                         <!-- End Panel Head -->
                         <!-- Start Panel Body -->
                         <div class="panel-body">
-                        	<!-- Start Row in the Panel -->
-							<div class="row">
-								<!-- Start left in the Panel -->
-								<div class="col-lg-12">
-									<div class="form-group">
-										<label> 날짜</label>
-										<input class="form-control" id="datepicker">
+                        	<!-- Start Form for Submit -->
+                        	<form name="aform" id="aform" method="post">
+	                        	<!-- Start Row in the Panel -->
+								<div class="row">
+									<!-- Start left in the Panel -->
+									<div class="col-lg-12">
+										<div class="form-group">
+											<label> 날짜</label>
+											<input class="form-control" id="sdate" name="sdate" value="${sdate }">
+										</div>
+										<button type="submit" class="btn btn-outline btn-default" onclick="fnSubmit()"> 검색</button>
+										<button type="reset" class="btn btn-outline btn-default"> 초기화</button>
 									</div>
-									<button type="submit" class="btn btn-outline btn-default"> 검색</button>
-									<button type="reset" class="btn btn-outline btn-default"> 초기화</button>
+									<!-- End left in the Panel -->
 								</div>
-								<!-- End left in the Panel -->
-							</div>
-	                        <!-- End Row in the Panel -->
+		                        <!-- End Row in the Panel -->
+		                    </form>
+		                    <!-- End Form -->
                         </div>
                         <!-- End Panel Body -->
                     </div>
@@ -119,55 +133,43 @@
 								<table class="table table-striped table-bordered table-hover" id="dataTables-Daily">
 									<thead>
 							            <tr>
-							                <th>First name</th>
-							                <th>Last name</th>
-							                <th>Position</th>
-							                <th>Office</th>
-							                <th>Salary</th>
+							                <th>순번</th>
+							                <th>주소</th>
+							                <th>전화번호</th>
+							                <th>메뉴</th>
+							                <th>날짜</th>
+							                <th>매출</th>
 							            </tr>
 							        </thead>
 							        <tfoot>
 							            <tr>
-							                <th colspan="4" style="text-align:right">Total:</th>
+							                <th colspan="5" style="text-align:right">Total:</th>
 							                <th></th>
 							            </tr>
 							        </tfoot>
 							        <tbody>
-							            <tr>
-							                <td>Lael</td>
-							                <td>Greer</td>
-							                <td>Systems Administrator</td>
-							                <td>London</td>
-							                <td>$103,500</td>
-							            </tr>
-							            <tr>
-							                <td>Jonas</td>
-							                <td>Alexander</td>
-							                <td>Developer</td>
-							                <td>San Francisco</td>
-							                <td>$86,500</td>
-							            </tr>
-							            <tr>
-							                <td>Shad</td>
-							                <td>Decker</td>
-							                <td>Regional Director</td>
-							                <td>Edinburgh</td>
-							                <td>$183,000</td>
-							            </tr>
-							            <tr>
-							                <td>Michael</td>
-							                <td>Bruce</td>
-							                <td>Javascript Developer</td>
-							                <td>Singapore</td>
-							                <td>$183,000</td>
-							            </tr>
-							            <tr>
-							                <td>Donna</td>
-							                <td>Snider</td>
-							                <td>Customer Support</td>
-							                <td>New York</td>
-							                <td>$112,000</td>
-							            </tr>
+							        	<c:forEach items="${salesList }" var="result" varStatus="status">
+							        		<tr>
+							        			<td>
+							        				${result.SALES_NO }
+							        			</td>
+							        			<td>
+							        				${result.CUST_NO }
+							        			</td>
+							        			<td>
+							        				${result.CUST_NO }
+							        			</td>
+							        			<td>
+							        				${result.MENU }
+							        			</td>
+							        			<td>
+							        				${result.SALES_DATE }
+							        			</td>
+							        			<td>
+							        				${result.COST_SUM }
+							        			</td>
+							        		</tr>
+							        	</c:forEach>
 							        </tbody>
 							    </table>
                             </div>

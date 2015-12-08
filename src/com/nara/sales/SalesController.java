@@ -1,6 +1,7 @@
 package com.nara.sales;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -22,32 +23,40 @@ import com.nara.sales.service.SalesService;
 public class SalesController {
 	
 	private static final Logger log = LoggerFactory.getLogger(SalesController.class);
+	private static SoftUtil util = new SoftUtil();
 	
 	@Autowired
 	private SalesService salesService;
 	
 	
 	@RequestMapping("/salesDaily/salesDaily")
-	public void salesDaily(@RequestParam Map<String, Object> paramMap, ModelMap model, Principal principal) throws Throwable {
+	public void salesDaily(@RequestParam Map<String, Object> paramMap, ModelMap model) throws Throwable {
 		
-		// 메뉴 번호 세팅
-		String menu_id = SoftUtil.print((String)paramMap.get("menu_id"));
-		// 메뉴 번호 없으면 1세팅
-		if("".equals(menu_id)) menu_id = "0";
+		log.info("map : " + paramMap.toString());
 		
-		model.addAttribute("menu_id", menu_id);
+		String sdate = util.print((String)paramMap.get("sdate"));
+		System.out.println("****************************************************************\n[debug] sdate : " + sdate+"\n[debug] paramMap : "+(String)paramMap.get("sdate"));
+		paramMap.put("sdate", sdate);
 		
+		
+		List salesList = salesService.getDailyList(paramMap);
+		model.addAttribute("salesList",salesList);
+		model.put("sdate", sdate);
 	}
 
 	@RequestMapping("/salesMonthly/salesMonthly")
-	public void salesMonthly(@RequestParam Map<String, Object> paramMap, ModelMap model, Principal principal) throws Throwable {
+	public void salesMonthly(@RequestParam Map<String, Object> paramMap, ModelMap model) throws Throwable {
 		
-		// 메뉴 번호 세팅
-		String menu_id = SoftUtil.print((String)paramMap.get("menu_id"));
-		// 메뉴 번호 없으면 1세팅
-		if("".equals(menu_id)) menu_id = "0";
+		log.info("map : " + paramMap.toString());
 		
-		model.addAttribute("menu_id", menu_id);
+		String sdate = util.print((String)paramMap.get("sdate"));
+		System.out.println("****************************************************************\n[debug] sdate : " + sdate+"\n[debug] paramMap : "+(String)paramMap.get("sdate"));
+		paramMap.put("sdate", sdate);
+		
+		
+		List salesList = salesService.getMonthlyList(paramMap);
+		model.addAttribute("salesList",salesList);
+		model.put("sdate", sdate);
 		
 	}
 }

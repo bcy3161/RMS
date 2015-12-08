@@ -3,10 +3,33 @@
 
 <mapper namespace="sales">
 
-	<select id="getUserPwd" parameterType="java.lang.String" resultType="java.lang.String">
-	  select user_pw from comm_user where user_id = #{userid}
-	</select>	
+	<!-- get Daily Sales List -->
+	<select id="getDailyList" parameterType="java.util.Map" resultType="java.util.HashMap">
+		select 
+			sales_no	as	sales_no,
+			cust_no		as	cust_no,
+			menu		as	menu,
+			cost_sum	as	cost_sum,
+			sales_date	as	sales_date,
+			pay			as	pay
+		from sales
+		where
+			sales_date = #{sdate}
+	</select>
 	
+	<!-- get Monthly Sales List -->
+	<select id="getMonthlyList" parameterType="java.util.Map" resultType="java.util.HashMap">
+		select 
+			sales_no	as	sales_no,
+			cust_no		as	cust_no,
+			menu		as	menu,
+			cost_sum	as	cost_sum,
+			sales_date	as	sales_date,
+			pay			as	pay
+		from sales
+		where
+			to_char(sales_date,'YYYY-MM') = #{sdate}
+	</select>
 </mapper>
 
 

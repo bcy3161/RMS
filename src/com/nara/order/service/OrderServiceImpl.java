@@ -25,4 +25,13 @@ public class OrderServiceImpl implements OrderService {
 		return ret;
 	}
 	
+	/**
+	 * get Customer Infomation
+	 * */
+	public List getCustomerInfo(Map<String, Object> paramMap){
+		List ret = orderDao.getCustomerInfo(paramMap);
+		
+		return ret;
+	}
+	
 }

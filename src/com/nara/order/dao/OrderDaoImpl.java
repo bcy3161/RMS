@@ -16,6 +16,15 @@ public class OrderDaoImpl extends SqlSessionDaoSupport implements OrderDao {
 		return ret;
 	}
 	
+	/**
+	 * get Customer Infomation
+	 * */
+	public List getCustomerInfo(Map<String, Object> paramMap){
+		//List ret = getSqlSession().selectList("order.getCustomerInfo", paramMap);
+		List ret = getSqlSession().selectList("order.getCustomerInfo", paramMap);
+		
+		return ret;
+	}
 }
 
 

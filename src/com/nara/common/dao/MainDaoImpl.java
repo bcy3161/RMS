@@ -1,5 +1,6 @@
 package com.nara.common.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
@@ -7,12 +8,21 @@ import org.mybatis.spring.support.SqlSessionDaoSupport;
 public class MainDaoImpl extends SqlSessionDaoSupport implements MainDao {
 
 	/**
-	 *  get toDay's Sales count for main summary
+	 *  get today's Sales count for main summary
 	 * */
 	public int getTodaySalesCnt(Map<String, Object> paramMap){
 		int cnt = getSqlSession().selectOne("main.getTodaySalesCnt",paramMap);
 		return cnt;
 	}
+	
+	/**
+	 *  get sum sales in this month
+	 * */
+	public int getSalesSum(Map<String, Object> paramMap){
+		int sum = getSqlSession().selectOne("main.getSalesSum",paramMap);
+		return sum;
+	}
+	
 	/**
 	 * get Customer count for main summary
 	 * */
@@ -20,7 +30,14 @@ public class MainDaoImpl extends SqlSessionDaoSupport implements MainDao {
 		int cnt = getSqlSession().selectOne("main.getCustomerCnt",paramMap);
 		return cnt;
 	}
-	
+
+	/**
+	 * get today Sales List
+	 * */
+	public List getTodaySalesList(Map<String, Object> paramMap){
+		List cnt = getSqlSession().selectList("main.getTodaySalesList",paramMap);
+		return cnt;
+	}
 }
 
 

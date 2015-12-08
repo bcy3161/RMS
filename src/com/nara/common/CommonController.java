@@ -27,15 +27,29 @@ public class CommonController {
 	
 	
 	@RequestMapping("/main/main")
-	public void main(@RequestParam Map<String, Object> paramMap, ModelMap model, Principal principal) throws Throwable {
+	public void main(@RequestParam Map<String, Object> paramMap, ModelMap model) throws Throwable {
 		
 		log.info("map : " + paramMap.toString());
 
 		int today_cnt = mainService.getTodaySalesCnt(paramMap);
+		int sales_sum = mainService.getSalesSum(paramMap);
 		int cust_cnt = mainService.getCustomerCnt(paramMap);
-
+		List today_list = mainService.getTodaySalesList(paramMap);
+		
+		if("".equals(today_cnt)){
+			today_cnt=0;
+		}
+		if("".equals(sales_sum)){
+			sales_sum=0;
+		}
+		if("".equals(cust_cnt)){
+			cust_cnt=0;
+		}
+		
 		model.put("today_cnt", today_cnt);
+		model.put("sales_sum", sales_sum);
 		model.put("cust_cnt", cust_cnt);
+		model.addAttribute("today_list", today_list);
 	}
 	
 }

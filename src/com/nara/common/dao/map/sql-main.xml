@@ -3,13 +3,22 @@
 
 <mapper namespace="main">
 	
-	<!-- get toDay's Sales count for main summary -->
+	<!-- get today's Sales count for main summary -->
 	<select id="getTodaySalesCnt" parameterType="java.util.Map" resultType="Integer">
 		select
 			count(*)
 		from sales
 		where
 			sales_date = to_char(sysdate,'YYMMDD')
+	</select>
+	
+	<!-- get sum sales in this month -->
+	<select id="getSalesSum" parameterType="java.util.Map" resultType="Integer">
+		select
+			nvl(sum(cost_sum),0)
+		from sales
+		where
+			to_char(sales_date,'YYYYMM') = to_char(sysdate,'YYYYMM')
 	</select>
 	
 	<!-- get Customer count for main summary -->
@@ -19,6 +28,19 @@
 		from customer
 	</select>
 	
+	<!-- get today Sales List -->
+	<select id="getTodaySalesList" parameterType="java.util.Map" resultType="java.util.HashMap">
+		select 
+			sales_no	as	sales_no,
+			cust_no		as	cust_no,
+			menu		as	menu,
+			cost_sum	as	cost_sum,
+			sales_date	as	sales_date,
+			pay			as	pay
+		from sales
+		where
+			sales_date = to_char(sysdate,'YYMMDD')
+	</select>
 </mapper>
 
 
