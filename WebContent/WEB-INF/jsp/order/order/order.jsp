@@ -9,6 +9,13 @@
 	<%@ include file="/WEB-INF/jsp/sys/include/head.jspf" %>
 	<script>
 	
+		function isNumber(s) {
+		  s += ''; // 문자열로 변환
+		  s = s.replace(/^\s*|\s*$/g, ''); // 좌우 공백 제거
+		  if (s == '' || isNaN(s)) return false;
+		  return true;
+		}
+	
 		function actSubmit(frm, url)
 		{
 			frm.method = 'post';
@@ -22,7 +29,7 @@
 		}
 	
 		var menu_no;
-		var total=parseInt(0);
+		var cost_sum=parseInt(0);
 		/**
 		* 주문 시 수량 또는 맛 변경 
 		*/
@@ -80,7 +87,7 @@
 			var cnt=1;
 			if(selectedNo>9000){
 				cnt = document.getElementById("count").value;
-				flavor = cnt + '개';
+				flavor = cnt;
 				
 			}
 			else{
@@ -93,11 +100,11 @@
 			}
 			
 			
-			insertSelect(this.menu_list,menu_name+flavor,menu_cost);
+			insertSelect(this.menu_list,menu_name+"-"+flavor,menu_cost);
 			
 			//Sum Cost
-			total+=(parseInt(menu_cost)*parseInt(cnt));
-			document.getElementById("menu_cost").value=total;
+			cost_sum+=(parseInt(menu_cost)*parseInt(cnt));
+			document.getElementById("cost_sum").value=cost_sum;
 		}
 		
 		function fnRemoveMenu(){
@@ -105,12 +112,17 @@
 
 			var select = document.getElementById("menu_list");
 			var menu_cost = select.options[select.selectedIndex].value;
+			var menu_text = select.options[select.selectedIndex].text;
+			var cnt_array = menu_text.split("-");
+			var cnt = 1;
+			if(isNumber(cnt_array[1]))
+				cnt = cnt_array[1];
 			
 			removeSelect(this.menu_list);
 			
 			//Sum Cost
-			total-=parseInt(menu_cost);
-			document.getElementById("menu_cost").value=total;
+			cost_sum-=(parseInt(menu_cost)*parseInt(cnt));
+			document.getElementById("cost_sum").value=cost_sum;
 		}
 		
 		function insertSelect(theSel, newText, newValue)
@@ -162,6 +174,36 @@
 		  	}
 		}
 
+		$(document).ready(function() {
+		    $('#dataTables-Daily').DataTable( {
+		    	"order":[[0,'desc']],
+		    	"paging":   false,
+		        "footerCallback": function ( row, data, start, end, display ) {
+		            var api = this.api(), data;
+		 
+		            // Remove the formatting to get integer data for summation
+		            var intVal = function ( i ) {
+		                return typeof i === 'string' ?
+		                    i.replace(/[\$,]/g, '')*1 :
+		                    typeof i === 'number' ?
+		                        i : 0;
+		            };
+		 
+		            // Total over all pages
+		            total = api
+		                .column( 4 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+		 
+		            // Update footer
+		            $( api.column( 4 ).footer() ).html(
+		                total +' 원'
+		            );
+		        }
+		    } );
+		} );
 	</script>
 </head>
 <!-- End Head -->
@@ -248,6 +290,7 @@
 										<input type="hidden" id="cust_no" name="cust_no" value="${cust_no }"/>
 										<input type="hidden" id="phone" name="phone" value="${phone }"/>
 										<input type="hidden" id="address" name="address" value="${address }"/>
+										<input type="hidden" id="menu" name="menu" value="test"/>
 										<div class="form-group">
 											<label> 주문 내역</label>
 											<select multiple="multiple" class="form-control" id="menu_list" name="menu_list">
@@ -255,9 +298,9 @@
 	                                    </div>
 	                                    <div class="form-group">
 											<label> 가격</label>
-											<input class="form-control" id="menu_cost" type="text" disabled>
+											<input class="form-control" id="cost_sum" name="cost_sum" type="text" readonly="readonly">
 										</div>
-										<button type="submit" class="btn btn-outline btn-default"> 주문</button>
+										<button type="submit" class="btn btn-outline btn-default" onclick="fnAddOrder()"> 주문</button>
 										<button type="reset" class="btn btn-outline btn-default"> 초기화</button>
 									</form>
 								</div>
@@ -281,64 +324,46 @@
                         <div class="panel-body">
                            <div class="row">
                                 <div class="col-lg-12">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-hover table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>NO</th>
-                                                    <th>주소</th>
-                                                    <th>전화번호</th>
-                                                    <th>주문내역</th>
-                                                    <th>가격</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>3326</td>
-                                                    <td>화명동 대우이안아파트 107동 2403호</td>
-                                                    <td>01066854025</td>
-                                                    <td>아구찜 대 맵게<br>우동사리</td>
-                                                    <td>38,000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3326</td>
-                                                    <td>화명동 대우이안아파트 107동 2403호</td>
-                                                    <td>01066854025</td>
-                                                    <td>아구찜 대 맵게<br>우동사리</td>
-                                                    <td>38,000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3326</td>
-                                                    <td>화명동 대우이안아파트 107동 2403호</td>
-                                                    <td>01066854025</td>
-                                                    <td>아구찜 대 맵게<br>우동사리</td>
-                                                    <td>38,000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3326</td>
-                                                    <td>화명동 대우이안아파트 107동 2403호</td>
-                                                    <td>01066854025</td>
-                                                    <td>아구찜 대 맵게<br>우동사리</td>
-                                                    <td>38,000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3326</td>
-                                                    <td>화명동 대우이안아파트 107동 2403호</td>
-                                                    <td>01066854025</td>
-                                                    <td>아구찜 대 맵게<br>우동사리</td>
-                                                    <td>38,000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3326</td>
-                                                    <td>화명동 대우이안아파트 107동 2403호</td>
-                                                    <td>01066854025</td>
-                                                    <td>아구찜 대 맵게<br>우동사리</td>
-                                                    <td>38,000</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <!-- /.table-responsive -->
+                                    <div class="dataTable_wrapper">
+										<table class="table table-striped table-bordered table-hover" id="dataTables-Daily">
+											<thead>
+									            <tr>
+									                <th>순번</th>
+									                <th>주소</th>
+									                <th>전화번호</th>
+									                <th>메뉴</th>
+									                <th>매출</th>
+									            </tr>
+									        </thead>
+									        <tfoot>
+									            <tr>
+									                <th colspan="4" style="text-align:right">Total:</th>
+									                <th></th>
+									            </tr>
+									        </tfoot>
+									        <tbody>
+									        	<c:forEach items="${today_list }" var="result" varStatus="status">
+									        		<tr>
+									        			<td>
+									        				${result.SALES_NO }
+									        			</td>
+									        			<td>
+									        				${result.CUST_NO }
+									        			</td>
+									        			<td>
+									        				${result.CUST_NO }
+									        			</td>
+									        			<td>
+									        				${result.MENU }
+									        			</td>
+									        			<td>
+									        				${result.COST_SUM }
+									        			</td>
+									        		</tr>
+									        	</c:forEach>
+									        </tbody>
+									    </table>
+		                            </div>
                                 </div>
                                 <!-- /.col-lg-4 (nested) -->
                                 <div class="col-lg-8">

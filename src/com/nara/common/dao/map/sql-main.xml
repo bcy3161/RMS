@@ -9,7 +9,7 @@
 			count(*)
 		from sales
 		where
-			sales_date = to_char(sysdate,'YYMMDD')
+			to_char(sales_date,'YYMMDD') = to_char(sysdate,'YYMMDD')
 	</select>
 	
 	<!-- get sum sales in this month -->
@@ -39,7 +39,9 @@
 			pay			as	pay
 		from sales
 		where
-			sales_date = to_char(sysdate,'YYMMDD')
+			to_char(sales_date,'YYMMDD') = to_char(sysdate,'YYMMDD')
+		order by
+			sales_no DESC
 	</select>
 </mapper>
 

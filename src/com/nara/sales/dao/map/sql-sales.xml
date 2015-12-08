@@ -14,7 +14,7 @@
 			pay			as	pay
 		from sales
 		where
-			sales_date = #{sdate}
+			to_char(sales_date,'YYYY-MM-DD') = #{sdate}
 	</select>
 	
 	<!-- get Monthly Sales List -->

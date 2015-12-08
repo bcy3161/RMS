@@ -10,6 +10,7 @@
 	<script>
 	$(document).ready(function() {
 	    $('#dataTables-Daily').DataTable( {
+	    	"order":[[0,'desc']],
 	    	"paging":   false,
 	        "footerCallback": function ( row, data, start, end, display ) {
 	            var api = this.api(), data;
@@ -192,7 +193,7 @@
 							        				${result.CUST_NO }
 							        			</td>
 							        			<td>
-							        				${result.MENU_NO }
+							        				${result.MENU }
 							        			</td>
 							        			<td>
 							        				${result.COST_SUM }

@@ -28,6 +28,21 @@
 			phone	=	#{phone, jdbcType=VARCHAR, javaType=String}
 	</select>
 	
+	<!-- add New Customer -->
+	<insert id="addNewOrder" parameterType="com.nara.order.vo.AddOrder">
+		<selectKey order="BEFORE" keyProperty="sales_no" resultType="int">
+			select 
+				nvl(max(to_number(sales_no)),0)+1
+			from
+				sales
+		</selectKey>
+		insert into sales
+			(sales_no, cust_no, menu, cost_sum, sales_date, pay)
+		values
+			(#{sales_no}, #{cust_no}, #{menu},#{cost_sum}, sysdate, 1)
+	</insert>
+	
+	
 </mapper>
 
 

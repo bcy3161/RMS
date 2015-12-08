@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.nara.common.dao.MainDao;
 import com.nara.order.dao.OrderDao;
+import com.nara.order.vo.AddOrder;
 
 public class OrderServiceImpl implements OrderService {
 	
@@ -34,4 +35,10 @@ public class OrderServiceImpl implements OrderService {
 		return ret;
 	}
 	
+	/**
+	 * AddOrder
+	 * */
+	public int addOrder(AddOrder addOrder){
+		return orderDao.addOrder(addOrder);
+	}
 }

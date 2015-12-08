@@ -1,6 +1,5 @@
 package com.nara.order;
 
-import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.nara.common.service.MainService;
-import com.nara.custom.vo.AddCustom;
 import com.nara.framework.util.SoftUtil;
 import com.nara.order.service.OrderService;
+import com.nara.order.vo.AddOrder;
 
 
 @Controller
@@ -30,6 +29,8 @@ public class OrderController {
 	
 	@Autowired
 	private OrderService orderService;
+	@Autowired
+	private MainService mainService;
 	
 	
 	@RequestMapping("/order/order")
@@ -42,6 +43,10 @@ public class OrderController {
 		
 		String phone = util.print((String)paramMap.get("phone"));
 		String address = util.print((String)paramMap.get("address"));
+		
+		//오른쪽 금일 주문 목록
+		List today_list = mainService.getTodaySalesList(paramMap);
+		model.addAttribute("today_list", today_list);
 		
 		//Convert List to Map
 		List<Map<String,Object>> userInfo;
@@ -70,10 +75,10 @@ public class OrderController {
 	}
 	
 	@RequestMapping("/order/addOrder")
-	public ModelAndView addCustomer(@ModelAttribute("addCustom") AddCustom addCustom, ModelMap model) throws Throwable {
-//		log.info("addCustom List:::::::::::" + addCustom.getCust_no()+", " + addCustom.getAddress() + ", "+ addCustom.getPhone());
-//		
-//		int result = customService.addCustomer(addCustom);
+	public ModelAndView addCustomer(@ModelAttribute("addOrder") AddOrder addOrder, ModelMap model) throws Throwable {
+		log.info("addOrder List:::::::::::" + addOrder.getSales_no()+", "+addOrder.getCust_no()+", " + addOrder.getCost_sum() + ", "+ addOrder.getMenu());
+		
+		int result = orderService.addOrder(addOrder);
 		
 		//뷰화면 redirect
 		ModelAndView mav = new ModelAndView();
