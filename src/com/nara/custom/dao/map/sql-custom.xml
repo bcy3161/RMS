@@ -21,9 +21,9 @@
 				customer
 		</selectKey>
 		insert into customer
-			(cust_no, address, phone)
+			(cust_no, address, phone, cnt)
 		values
-			(#{cust_no}, #{address}, #{phone})
+			(#{cust_no}, #{address}, #{phone}, 0)
 	</insert>
 </mapper>
 

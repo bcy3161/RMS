@@ -13,5 +13,7 @@ public interface SalesService {
 	public void setSalesDao(SalesDao salesDao);
 	public List getDailyList(Map<String, Object> paramMap);
 	public List getMonthlyList(Map<String, Object> paramMap);
-	public int addOrder(AddOrder addOrder);
+	public List getBetweenList(Map<String, Object> paramMap);
+	public String getSalesDetail(int sales_no);
+	public List getHistoryList(Map<String, Object> paramMap);
 }

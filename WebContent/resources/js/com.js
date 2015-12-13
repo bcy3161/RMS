@@ -18,6 +18,23 @@
 			return false;
 		}
 
+	//배열 특정값  삭제 removeA(etcList,cnt_array)
+	function removeA(arr) {
+	    var what, a = arguments, L = a.length, ax;
+	    while (L > 1 && arr.length) {
+	        what = a[--L];
+	        while ((ax= arr.indexOf(what)) !== -1) {
+	            arr.splice(ax, 1);
+	        }
+	    }
+	    return arr;
+	}
+	
+	
+	function numberWithCommas(x) {
+	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+		
 	/*팝업창 화면 중앙에 띄우기*/
 	function centerwin(path, w, h, scroll){
 		winToTop = (screen.height) ? (screen.height-h)/2 : 0;

@@ -14,7 +14,7 @@
 
 <!------------------------------------- Bootstrap Import Files ------------------------------------->
 <!-- Bootstrap Core CSS -->
-<link href="/resources/css/plugin/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link href="/resources/css/plugin/bootstrap/bootstrap.css" rel="stylesheet">
 
 <!-- Theme CSS -->
 <link href="/resources/css/plugin/sb-ui/sb-admin.css" rel="stylesheet">

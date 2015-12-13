@@ -18,8 +18,8 @@ public class MainDaoImpl extends SqlSessionDaoSupport implements MainDao {
 	/**
 	 *  get sum sales in this month
 	 * */
-	public int getSalesSum(Map<String, Object> paramMap){
-		int sum = getSqlSession().selectOne("main.getSalesSum",paramMap);
+	public String getSalesSum(Map<String, Object> paramMap){
+		String sum = getSqlSession().selectOne("main.getSalesSum",paramMap);
 		return sum;
 	}
 	
@@ -37,6 +37,13 @@ public class MainDaoImpl extends SqlSessionDaoSupport implements MainDao {
 	public List getTodaySalesList(Map<String, Object> paramMap){
 		List cnt = getSqlSession().selectList("main.getTodaySalesList",paramMap);
 		return cnt;
+	}
+	
+
+	public String getSalesDetail(int sales_no){
+		String ret = getSqlSession().selectOne("sales.getSalesDetail", sales_no);
+		
+		return ret;
 	}
 }
 

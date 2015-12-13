@@ -34,4 +34,29 @@ public class SalesServiceImpl implements SalesService {
 		
 		return ret;
 	}
+
+	/**
+	 * get Between Sales List
+	 * */
+	public List getBetweenList(Map<String, Object> paramMap){
+		List ret = salesDao.getBetweenList(paramMap);
+		
+		return ret;
+	}
+	
+	public String getSalesDetail(int sales_no){
+		String ret = salesDao.getSalesDetail(sales_no);
+		
+		return ret;
+	}
+
+	/**
+	 * get History List about customer
+	 * */
+	public List getHistoryList(Map<String, Object> paramMap){
+		List ret = salesDao.getHistoryList(paramMap);
+		
+		return ret;
+	}
+	
 }

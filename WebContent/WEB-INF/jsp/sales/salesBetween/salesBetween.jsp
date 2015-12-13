@@ -17,7 +17,7 @@
 		frm.action = url;
 	}
 	function fnSubmit() {
-		actSubmit(document.aform, '/sales/salesMonthly/salesMonthly.do');
+		actSubmit(document.aform, '/sales/salesBetween/salesBetween.do');
 	}
 	
 	$(document).ready(function() {
@@ -36,14 +36,14 @@
 	 
 	            // Total over all pages
 	            total = api
-	                .column( 5 )
+	                .column( 4 )
 	                .data()
 	                .reduce( function (a, b) {
 	                    return intVal(a) + intVal(b);
 	                }, 0 );
 	 
 	            // Update footer
-	            $( api.column( 5 ).footer() ).html(
+	            $( api.column( 4 ).footer() ).html(
 	                total +' 원'
 	            );
 	        }
@@ -55,7 +55,18 @@
 	*/
 	$(function(){
 		$('#sdate').datepicker({
-			dateFormat: 'yy-mm',
+			dateFormat: 'yy-mm-dd',
+			monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+			dayNamesMin:['일','월','화','수','목','금','토'],
+			changeMonth: true,
+			changeYear: true,
+			showMonthAfterYear: true
+		});
+	});
+
+	$(function(){
+		$('#edate').datepicker({
+			dateFormat: 'yy-mm-dd',
 			monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 			dayNamesMin:['일','월','화','수','목','금','토'],
 			changeMonth: true,
@@ -79,7 +90,7 @@
 			<!-- Start Subtitle -->
 			<div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header"> 월 매출</h1>
+                    <h1 class="page-header"> 기간별 매출</h1>
                 </div>
             </div>
             <!-- End Subtitle -->
@@ -91,7 +102,7 @@
                     <div class="panel panel-default">
                     	<!-- Start Panel Head -->
                         <div class="panel-heading">
-                            <i class="fa fa-shopping-cart fa-fw"></i> Input
+                            <i class="fa fa-shopping-cart fa-fw"></i> 검색조건
                         </div>
                         <!-- End Panel Head -->
                         <!-- Start Panel Body -->
@@ -101,19 +112,74 @@
 	                        	<!-- Start Row in the Panel -->
 								<div class="row">
 									<!-- Start left in the Panel -->
-									<div class="col-lg-12">
+									<div class="col-lg-3">
 										<div class="form-group">
-											<label> 날짜</label>
+											<label> 시작날짜</label>
 											<input class="form-control" id="sdate" name="sdate" value="${sdate }">
 										</div>
 										<button type="submit" class="btn btn-outline btn-default" onclick="fnSubmit()"> 검색</button>
-										<button type="reset" class="btn btn-outline btn-default"> 초기화</button>
+									</div>
+									<div class="col-lg-3">
+										<div class="form-group">
+											<label> 끝 날짜</label>
+											<input class="form-control" id="edate" name="edate" value="${edate }">
+										</div>
+									</div>
+									<div class="col-lg-3">
+										<div class="form-group">
+											<label> 결제 구분</label>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" name="pay" id="pay_all" value="전체" checked="checked">전체
+												</label>
+											</div>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" name="pay" id="pay_cash" value="현금">현금
+												</label>
+											</div>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" name="pay" id="pay_credit" value="카드">카드
+												</label>
+											</div>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" name="pay" id="pay_baedal" value="배달의민족">배민
+												</label>
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-3">
+										<div class="form-group">
+											<label> 매출 구분</label>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" name="section" id="pay_cash" value="현금" >전체
+												</label>
+											</div>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" name="section" id="pay_credit" value="카드">신화명
+												</label>
+											</div>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" name="section" id="pay_baedal" value="배달의민족">물꽁
+												</label>
+											</div>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" name="section" id="pay_baedal" value="배달의민족">청진동
+												</label>
+											</div>
+										</div>
 									</div>
 									<!-- End left in the Panel -->
 								</div>
 		                        <!-- End Row in the Panel -->
-		                    </form>
-		                    <!-- End Form -->
+	                        </form>
+	                        <!-- End Form -->
                         </div>
                         <!-- End Panel Body -->
                     </div>
@@ -137,13 +203,12 @@
 							                <th>주소</th>
 							                <th>전화번호</th>
 							                <th>메뉴</th>
-							                <th>날짜</th>
 							                <th>매출</th>
 							            </tr>
 							        </thead>
 							        <tfoot>
 							            <tr>
-							                <th colspan="5" style="text-align:right">Total:</th>
+							                <th colspan="4" style="text-align:right">Total:</th>
 							                <th></th>
 							            </tr>
 							        </tfoot>
@@ -161,9 +226,6 @@
 							        			</td>
 							        			<td>
 							        				${result.MENU }
-							        			</td>
-							        			<td>
-							        				${result.SALES_DATE }
 							        			</td>
 							        			<td>
 							        				${result.COST_SUM }

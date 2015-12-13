@@ -13,12 +13,14 @@
 	</select>
 	
 	<!-- get sum sales in this month -->
-	<select id="getSalesSum" parameterType="java.util.Map" resultType="Integer">
+	<select id="getSalesSum" parameterType="java.util.Map" resultType="String">
 		select
-			nvl(sum(cost_sum),0)
+			to_char(nvl(sum(cost_sum),0),'999,999,999')
 		from sales
 		where
 			to_char(sales_date,'YYYYMM') = to_char(sysdate,'YYYYMM')
+			and
+			section = #{mod}
 	</select>
 	
 	<!-- get Customer count for main summary -->
@@ -31,15 +33,21 @@
 	<!-- get today Sales List -->
 	<select id="getTodaySalesList" parameterType="java.util.Map" resultType="java.util.HashMap">
 		select 
-			sales_no	as	sales_no,
-			cust_no		as	cust_no,
-			menu		as	menu,
-			cost_sum	as	cost_sum,
-			sales_date	as	sales_date,
-			pay			as	pay
-		from sales
+			A.sales_no		as	sales_no,
+			A.cust_no		as	cust_no,
+			B.address		as	address,
+			B.phone			as	phone,
+			A.menu			as	menu,
+			to_char(A.cost_sum,'999,999,999')		as	cost_sum,
+			A.sales_date	as	sales_date,
+			A.pay			as	pay,
+			A.section		as	section
+		from 
+			sales A, customer B
 		where
-			to_char(sales_date,'YYMMDD') = to_char(sysdate,'YYMMDD')
+			to_char(A.sales_date,'YYMMDD') = to_char(sysdate,'YYMMDD')
+			and
+			B.cust_no	=	A.cust_no
 		order by
 			sales_no DESC
 	</select>

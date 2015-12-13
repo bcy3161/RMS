@@ -1,0 +1,118 @@
+<%@ page pageEncoding="utf-8"%>
+
+<nav  class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+	<div class="navbar-header">
+	    <a href="/comm/main/main.do" class="navbar-brand">신화명 아구찜</a>
+	    <ul class="nav navbar-top-links navbar-right">
+		    <li class="dropdown">
+	            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+					주문  <i class="fa fa-caret-down"></i>
+	            </a>
+	            <ul class="dropdown-menu dropdown-user">
+	                <li>
+                        <a href="/order/order/order_sin.do">신화명 주문</a>
+                    </li>
+                    <li>
+                        <a href="/order/order/order_mul.do">물꽁 주문</a>
+                    </li>
+                    <li>
+                        <a href="#">요일별 매출</a>
+                    </li>
+                    <li>
+                        <a href="#">메뉴별 매출</a>
+                    </li>
+	            </ul>
+	            <!-- /.dropdown-messages -->
+	        </li>
+	        <!-- /.dropdown -->
+	        <li class="dropdown">
+	            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+					매출  <i class="fa fa-caret-down"></i>
+	            </a>
+	            <ul class="dropdown-menu dropdown-user">
+	                <li>
+                        <a href="/order/order/order_sin.do">신화명 주문</a>
+                    </li>
+                    <li>
+                        <a href="/order/order/order_mul.do">물꽁 주문</a>
+                    </li>
+                    <li>
+                        <a href="#">요일별 매출</a>
+                    </li>
+                    <li>
+                        <a href="#">메뉴별 매출</a>
+                    </li>
+	            </ul>
+	            <!-- /.dropdown-messages -->
+	        </li>
+	        <!-- /.dropdown -->
+	    </ul>
+	</div>
+	<!-- Start Side Menu -->
+	<div id="wrapper-nav" class="navbar-default sidebar" role="navigation">
+	    <div id="slider" class="sidebar-nav navbar-collapse">
+	        <ul class="nav" id="side-menu">
+	        	<!-- 메인 -->
+	            <li>
+	                <a href="/comm/main/main.do"><i class="fa fa-dashboard fa-fw"></i> 메인</a>
+	            </li>
+	            <!-- Start 주문 -->
+	            <li>
+	                <a href="#"><i class="fa fa-table fa-fw"></i> 주문<span class="fa arrow"></span></a>
+	                <ul class="nav nav-second-level">
+	                    <li>
+	                        <a href="/order/order/order_sin.do">신화명 주문</a>
+	                    </li>
+	                    <li>
+	                        <a href="/order/order/order_mul.do">물꽁 주문</a>
+	                    </li>
+	                    <li>
+	                        <a href="#">요일별 매출</a>
+	                    </li>
+	                    <li>
+	                        <a href="#">메뉴별 매출</a>
+	                    </li>
+	                </ul>
+	            </li>
+	            <!-- End 주문 -->
+	            <!-- Start 매출관리 -->
+	            <li>
+	                <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> 매출 관리<span class="fa arrow"></span></a>
+	                <ul class="nav nav-second-level">
+	                    <li>
+	                        <a href="/sales/salesDaily/salesDaily.do">일 매출</a>
+	                    </li>
+	                    <li>
+	                        <a href="/sales/salesMonthly/salesMonthly.do">월 매출</a>
+	                    </li>
+	                    <li>
+	                        <a href="#">요일별 매출</a>
+	                    </li>
+	                    <li>
+	                        <a href="#">메뉴별 매출</a>
+	                    </li>
+	                </ul>
+	            </li>
+	            <!-- End 매출관리 -->
+	            <!-- Start 가계부 -->
+	            <li>
+	                <a href="#"><i class="fa fa-edit fa-fw"></i> 가계부</a>
+	            </li>
+	            <!-- End 가계부 -->
+	            <!-- Start 회원관리 -->
+	            <li>
+	                <a href="/custom/custom/customer.do"><i class="fa fa-wrench fa-fw"></i> 회원 관리</a>
+	            </li>
+				<!-- End 회원관리 -->
+	        </ul>
+	    </div>
+	    <!-- /.sidebar-collapse -->
+	</div>
+	<!-- End Side Menu -->
+	<script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper-nav").toggleClass("toggled");
+    });
+    </script>
+</nav>

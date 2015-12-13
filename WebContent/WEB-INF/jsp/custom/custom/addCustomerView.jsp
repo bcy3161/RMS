@@ -28,8 +28,6 @@
 <body >
 
 	<div id="wrapper">
-		<!-- Include Navi file -->
-		<%@ include file="/WEB-INF/jsp/sys/include/navi.jspf" %>
 		
 		<!-- Start Contents -->
 		<div id="page-wrapper">

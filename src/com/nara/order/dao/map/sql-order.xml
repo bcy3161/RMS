@@ -5,13 +5,36 @@
 
 	<!-- get Menu List for filling Option -->
 	<select id="getMenuList" parameterType="java.util.Map" resultType="java.util.HashMap">
-		select 
+		select
 			menu_no	as	menu_no,
 			menu_name	as	menu_name,
 			menu_size	as	menu_size,
 			menu_cost	as	menu_cost
 		from
 			menu
+		where
+			<if test="mod == '01'">
+				menu_no	like	'01%'
+			</if>
+			<if test="mod == '02'">
+				menu_no	like	'02%'
+			</if>
+			<if test="mod == '03'">
+				menu_no	like	'03%'
+			</if>
+			or
+			menu_no	like	'09%'
+		order by
+			menu_no	ASC
+	</select>
+	
+	<select id="getMenuName" parameterType="java.util.Map" resultType="java.util.HashMap">
+		select distinct
+			menu_name	as	menu_name
+		from
+			menu
+		where
+			menu_no	like	'${mod}%'
 	</select>
 	
 	<!-- get Customer Infomation -->
@@ -19,29 +42,58 @@
 		select
 			cust_no	as	cust_no,
 			address	as	address,
-			phone	as	phone
+			phone	as	phone,
+			cnt		as	cnt
 		from
 			customer
 		where
 			address	=	#{address, jdbcType=VARCHAR, javaType=String}
 			or
 			phone	=	#{phone, jdbcType=VARCHAR, javaType=String}
+			or
+			cust_no	=	#{cust_no}
 	</select>
 	
-	<!-- add New Customer -->
+	<!-- add New Order -->
 	<insert id="addNewOrder" parameterType="com.nara.order.vo.AddOrder">
 		<selectKey order="BEFORE" keyProperty="sales_no" resultType="int">
 			select 
-				nvl(max(to_number(sales_no)),0)+1
+				to_number(to_char(sysdate,'YYMMDD') || nvl(to_char(max(substr(sales_no,7))),'00'))+1
+			from
+				sales
+	        where
+				to_char(sales_date,'YYYYMMDD') = to_char(sysdate,'YYYYMMDD')
+		</selectKey>
+		insert
+			into sales
+				(sales_no, cust_no, cost_sum, sales_date, pay, section)
+			values
+				(#{sales_no}, #{cust_no}, #{cost_sum}, sysdate, #{pay}, #{section})
+	</insert>
+	
+	<!-- add Order Detail -->
+	<insert id="addNewOrderDetail" parameterType="com.nara.order.vo.AddOrderDetail">
+		<selectKey order="BEFORE" keyProperty="sales_no" resultType="int">
+			select
+				nvl(max(to_number(sales_no)),0)
 			from
 				sales
 		</selectKey>
-		insert into sales
-			(sales_no, cust_no, menu, cost_sum, sales_date, pay)
-		values
-			(#{sales_no}, #{cust_no}, #{menu},#{cost_sum}, sysdate, 1)
+		insert
+			into salesdetail
+				(sales_no, menu_no, etc)
+			values
+				(#{sales_no}, #{menu_no},#{etc})
+		
 	</insert>
 	
+	<!-- Update Customer Cnt -->
+	<update id="updateCustomerCnt">
+		update	customer
+			set	cnt	=	cnt+1
+		where 
+			cust_no	=	#{cust_no}
+	</update>
 	
 </mapper>
 

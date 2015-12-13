@@ -91,7 +91,7 @@
                     <div class="panel panel-default">
                     	<!-- Start Panel Head -->
                         <div class="panel-heading">
-                            <i class="fa fa-shopping-cart fa-fw"></i> Input
+                            <i class="fa fa-shopping-cart fa-fw"></i> 검색조건
                         </div>
                         <!-- End Panel Head -->
                         <!-- Start Panel Body -->
@@ -101,13 +101,63 @@
 	                        	<!-- Start Row in the Panel -->
 								<div class="row">
 									<!-- Start left in the Panel -->
-									<div class="col-lg-12">
+									<div class="col-lg-6">
 										<div class="form-group">
 											<label> 날짜</label>
 											<input class="form-control" id="sdate" name="sdate" value="${sdate }">
 										</div>
 										<button type="submit" class="btn btn-outline btn-default" onclick="fnSubmit()"> 검색</button>
 										<button type="reset" class="btn btn-outline btn-default"> 초기화</button>
+									</div>
+									<div class="col-lg-3">
+										<div class="form-group">
+											<label> 결제 구분</label>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" name="pay" id="pay_all" value="전체" checked="checked">전체
+												</label>
+											</div>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" name="pay" id="pay_cash" value="현금">현금
+												</label>
+											</div>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" name="pay" id="pay_credit" value="카드">카드
+												</label>
+											</div>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" name="pay" id="pay_baedal" value="배달의민족">배민
+												</label>
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-3">
+										<div class="form-group">
+											<label> 매출 구분</label>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" name="section" id="pay_cash" value="현금" >전체
+												</label>
+											</div>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" name="section" id="pay_credit" value="카드">신화명
+												</label>
+											</div>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" name="section" id="pay_baedal" value="배달의민족">물꽁
+												</label>
+											</div>
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" name="section" id="pay_baedal" value="배달의민족">청진동
+												</label>
+											</div>
+										</div>
 									</div>
 									<!-- End left in the Panel -->
 								</div>
@@ -153,10 +203,10 @@
 							        				${result.SALES_NO }
 							        			</td>
 							        			<td>
-							        				${result.CUST_NO }
+							        				${result.ADDRESS }
 							        			</td>
 							        			<td>
-							        				${result.CUST_NO }
+							        				${result.PHONE }
 							        			</td>
 							        			<td>
 							        				${result.MENU }

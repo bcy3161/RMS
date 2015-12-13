@@ -6,29 +6,86 @@
 	<!-- get Daily Sales List -->
 	<select id="getDailyList" parameterType="java.util.Map" resultType="java.util.HashMap">
 		select 
-			sales_no	as	sales_no,
-			cust_no		as	cust_no,
-			menu		as	menu,
-			cost_sum	as	cost_sum,
-			sales_date	as	sales_date,
-			pay			as	pay
-		from sales
+			A.sales_no		as	sales_no,
+			A.cust_no		as	cust_no,
+			B.address		as	address,
+			B.phone			as	phone,
+			A.menu			as	menu,
+			to_char(A.cost_sum,'999,999,999')		as	cost_sum,
+			A.sales_date	as	sales_date,
+			A.pay			as	pay,
+			A.section		as	section
+		from 
+			sales A, customer B
 		where
-			to_char(sales_date,'YYYY-MM-DD') = #{sdate}
+			to_char(A.sales_date,'YYYY-MM-DD') = #{sdate}
+			and
+			B.cust_no	=	A.cust_no
+			and
+			A.pay		=	#{pay}
 	</select>
 	
 	<!-- get Monthly Sales List -->
 	<select id="getMonthlyList" parameterType="java.util.Map" resultType="java.util.HashMap">
 		select 
-			sales_no	as	sales_no,
-			cust_no		as	cust_no,
-			menu		as	menu,
-			cost_sum	as	cost_sum,
-			sales_date	as	sales_date,
-			pay			as	pay
-		from sales
+			A.sales_no		as	sales_no,
+			A.cust_no		as	cust_no,
+			B.address		as	address,
+			B.phone			as	phone,
+			to_char(A.cost_sum,'999,999,999')		as	cost_sum,
+			A.sales_date	as	sales_date,
+			A.pay			as	pay
+		from 
+			sales A, customer B
 		where
-			to_char(sales_date,'YYYY-MM') = #{sdate}
+			to_char(A.sales_date,'YYYY-MM') = #{sdate}
+			and
+			B.cust_no	=	A.cust_no
+	</select>
+	
+	<!-- get Between Sales List -->
+	<select id="getBetweenList" parameterType="java.util.Map" resultType="java.util.HashMap">
+		select 
+			A.sales_no		as	sales_no,
+			A.cust_no		as	cust_no,
+			B.address		as	address,
+			B.phone			as	phone,
+			A.menu			as	menu,
+			to_char(A.cost_sum,'999,999,999')		as	cost_sum,
+			A.sales_date	as	sales_date,
+			A.pay			as	pay,
+			A.section		as	section
+		from 
+			sales A, customer B
+		where
+			to_char(A.sales_date,'YYYY-MM-DD')	between #{sdate} and #{edate}
+			and
+			B.cust_no	=	A.cust_no
+			and
+			A.pay		=	#{pay}
+	</select>
+	
+	<!-- get History about a customer -->
+	<select id="getHistoryList" parameterType="java.util.Map" resultType="java.util.HashMap">
+		select 
+			sales_no		as	sales_no,
+			sales_date		as	sales_date,
+			section			as	section
+		from 
+			sales
+		where
+			cust_no		=	#{cust_no}
+	</select>
+	
+	<select id="getSalesDetail" parameterType="int" resultType="String">
+		select
+			nvl(wm_concat(B.menu_name ||' ' || B.menu_size || ' ' || A.etc),0)	as	menu
+		from 
+			salesdetail	A, menu	B
+		where
+			A.sales_no	=	#{sales_no,, jdbcType=VARCHAR, javaType=int}
+			and
+			A.menu_no	=	B.menu_no
 	</select>
 </mapper>
 

@@ -8,9 +8,23 @@
 	<!-- Include head file -->
 	<%@ include file="/WEB-INF/jsp/sys/include/head.jspf" %>
 	<script>
+	function viewInfo(frm, cust_no){
+		var url='/custom/customInfo/popUpInfo.do';
+		var title = "Info";
+		var status = "width=550, height=500, resizable=no, scrollbars=no";
+		
+		frm.cust_no.value=cust_no;
+		
+		window.open("",title,status);
+		frm.target = title;
+		frm.action = url;
+		frm.method = "post";
+		frm.submit();
+	}
+	
 	$(document).ready(function() {
 	    $('#dataTables-Daily').DataTable( {
-	    	"order":[[0,'desc']],
+	    	"order":[[1,'desc']],
 	    	"paging":   false,
 	        "footerCallback": function ( row, data, start, end, display ) {
 	            var api = this.api(), data;
@@ -25,15 +39,15 @@
 	 
 	            // Total over all pages
 	            total = api
-	                .column( 4 )
+	                .column( 6 )
 	                .data()
 	                .reduce( function (a, b) {
 	                    return intVal(a) + intVal(b);
 	                }, 0 );
 	 
 	            // Update footer
-	            $( api.column( 4 ).footer() ).html(
-	                total +' 원'
+	            $( api.column( 6 ).footer() ).html(
+	            	numberWithCommas(total) +' 원'
 	            );
 	        }
 	    } );
@@ -59,22 +73,22 @@
             <!-- End Subtitle -->
             <!-- Start summary -->
             <div class="row">
-            	<!-- 일 매출 요약 -->
+            	<!-- 신화명 주문 -->
             	<div class="col-lg-3 col-md-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-shopping-cart fa-5x"></i>
+                                    <i class="fa fa-bar-chart-o fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">${today_cnt }건</div>
-                                    <div>금일 주문</div>
+                                    <div class="huge">${sales_sum_1 }</div>
+                                    <div>신화명</div>
                                 </div>
                             </div>
                         </div>
-                        <!-- 일매출 로 링크 -->
-                        <a href="/sales/salesDaily/salesDaily.do">
+                        <!-- 신화명 주문 -->
+                        <a href="/order/order/order_sin.do">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -92,12 +106,12 @@
                                     <i class="fa fa-bar-chart-o fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">${sales_sum }원</div>
-                                    <div>월 매출</div>
+                                    <div class="huge">${sales_sum_2 }</div>
+                                    <div>물꽁</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="/sales/salesMonthly/salesMonthly.do">
+                        <a href="/order/order/order_mul.do">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -112,15 +126,15 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-edit fa-5x"></i>
+                                    <i class="fa fa-bar-chart-o fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">12</div>
-                                    <div>가계부</div>
+                                    <div class="huge">${sales_sum_3 }</div>
+                                    <div>청진동</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="/order/order/order_chung.do">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -164,44 +178,70 @@
                         </div>
                         <div class="panel-body">
                         	<div class="dataTable_wrapper">
-								<table class="table table-striped table-bordered table-hover" id="dataTables-Daily">
-									<thead>
-							            <tr>
-							                <th>순번</th>
-							                <th>주소</th>
-							                <th>전화번호</th>
-							                <th>메뉴</th>
-							                <th>매출</th>
-							            </tr>
-							        </thead>
-							        <tfoot>
-							            <tr>
-							                <th colspan="4" style="text-align:right">Total:</th>
-							                <th></th>
-							            </tr>
-							        </tfoot>
-							        <tbody>
-							        	<c:forEach items="${today_list }" var="result" varStatus="status">
-							        		<tr>
-							        			<td>
-							        				${result.SALES_NO }
-							        			</td>
-							        			<td>
-							        				${result.CUST_NO }
-							        			</td>
-							        			<td>
-							        				${result.CUST_NO }
-							        			</td>
-							        			<td>
-							        				${result.MENU }
-							        			</td>
-							        			<td>
-							        				${result.COST_SUM }
-							        			</td>
-							        		</tr>
-							        	</c:forEach>
-							        </tbody>
-							    </table>
+						        <form name="aform" id="aform" method="post">
+						        	<input type="hidden" name="cust_no"/>
+									<table class="table table-striped table-bordered table-hover" id="dataTables-Daily">
+										<thead>
+								            <tr>
+								            	<th width="5px;"></th>
+								                <th>순번</th>
+								                <th>주소</th>
+								                <th>전화번호</th>
+								                <th>메뉴</th>
+								                <th>결제 수단</th>
+								                <th>매출</th>
+								            </tr>
+								        </thead>
+								        <tfoot>
+								            <tr>
+								                <th colspan="6" style="text-align:right">Total:</th>
+								                <th></th>
+								            </tr>
+								        </tfoot>
+								        <tbody>
+								        	<c:forEach items="${today_list }" var="result" varStatus="status">
+												
+								        		<tr onclick="viewInfo(document.aform,${result.CUST_NO})">
+								        			<td id="td${status.count }">
+								        			</td>
+								        			<c:if test="${result.SECTION =='1'}">
+								        				<script>
+								        				$("#td${status.count }").css("background-color","#2e6da4");
+								        				</script>
+								        			</c:if>
+								        			<c:if test="${result.SECTION =='2'}">
+								        				<script>
+								        				$("#td${status.count }").css("background-color","#5cb85c");
+								        				</script>
+								        			</c:if>
+								        			<c:if test="${result.SECTION =='3'}">
+								        				<script>
+								        				$("#td${status.count }").css("background-color","#f0ad4e");
+								        				</script>
+								        			</c:if>
+								        			<td>
+								        				${result.SALES_NO }
+								        			</td>
+								        			<td>
+								        				${result.ADDRESS }
+								        			</td>
+								        			<td>
+								        				${result.PHONE }
+								        			</td>
+								        			<td>
+								        				${result.MENU }
+								        			</td>
+								        			<td>
+								        				${result.PAY }
+								        			</td>
+								        			<td>
+								        				${result.COST_SUM }
+								        			</td>
+								        		</tr>
+								        	</c:forEach>
+								        </tbody>
+								    </table>
+								</form>
                             </div>
                         </div>
                     </div>

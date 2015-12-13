@@ -7,7 +7,8 @@ import java.util.Map;
 public interface MainDao {
 
 	public int getTodaySalesCnt(Map<String, Object> paramMap);
-	public int getSalesSum(Map<String, Object> paramMap);
+	public String getSalesSum(Map<String, Object> paramMap);
 	public int getCustomerCnt(Map<String, Object> paramMap);
 	public List getTodaySalesList(Map<String, Object> paramMap);
+	public String getSalesDetail(int sales_no);
 }

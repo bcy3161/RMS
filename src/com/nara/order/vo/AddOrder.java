@@ -6,10 +6,38 @@ public class AddOrder{
 	
 	int sales_no;
 	String cust_no;
-	String menu;
 	String cost_sum;
 	Date sales_date;
 	String pay;
+	String menu_no;
+	String etc;
+	String mod;
+	String section;
+	
+	public String getSection() {
+		return section;
+	}
+	public void setSection(String section) {
+		this.section = section;
+	}
+	public String getMod() {
+		return mod;
+	}
+	public void setMod(String mod) {
+		this.mod = mod;
+	}
+	public String getMenu_no() {
+		return menu_no;
+	}
+	public void setMenu_no(String menu_no) {
+		this.menu_no = menu_no;
+	}
+	public String getEtc() {
+		return etc;
+	}
+	public void setEtc(String etc) {
+		this.etc = etc;
+	}
 	public int getSales_no() {
 		return sales_no;
 	}
@@ -21,12 +49,6 @@ public class AddOrder{
 	}
 	public void setCust_no(String cust_no) {
 		this.cust_no = cust_no;
-	}
-	public String getMenu() {
-		return menu;
-	}
-	public void setMenu(String menu) {
-		this.menu = menu;
 	}
 	public String getCost_sum() {
 		return cost_sum;

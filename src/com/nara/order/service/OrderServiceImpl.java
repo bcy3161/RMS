@@ -6,6 +6,7 @@ import java.util.Map;
 import com.nara.common.dao.MainDao;
 import com.nara.order.dao.OrderDao;
 import com.nara.order.vo.AddOrder;
+import com.nara.order.vo.AddOrderDetail;
 
 public class OrderServiceImpl implements OrderService {
 	
@@ -25,6 +26,12 @@ public class OrderServiceImpl implements OrderService {
 		
 		return ret;
 	}
+
+	public List getMenuName(Map<String, Object> paramMap){
+		List ret = orderDao.getMenuName(paramMap);
+		
+		return ret;
+	}
 	
 	/**
 	 * get Customer Infomation
@@ -40,5 +47,10 @@ public class OrderServiceImpl implements OrderService {
 	 * */
 	public int addOrder(AddOrder addOrder){
 		return orderDao.addOrder(addOrder);
+	}
+	
+
+	public int addOrderDetail(AddOrderDetail addOrderDetail){
+		return orderDao.addOrderDetail(addOrderDetail);
 	}
 }

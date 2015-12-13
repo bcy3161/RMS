@@ -29,19 +29,9 @@
 		* 회원 검색
 		*/
 		function fnSearch() {
-			actSubmit(document.aform, '/order/order/order.do');
+			actSubmit(document.aform, '/order/order/order_sin.do');
 		}
 		
-		function removeA(arr) {
-		    var what, a = arguments, L = a.length, ax;
-		    while (L > 1 && arr.length) {
-		        what = a[--L];
-		        while ((ax= arr.indexOf(what)) !== -1) {
-		            arr.splice(ax, 1);
-		        }
-		    }
-		    return arr;
-		}
 		
 
 		var orderList = new Array();
@@ -139,20 +129,14 @@
 				}	
 			}
 			
-			if(selectedNo>10000 && selectedNo<19999){
-				document.forms["cform"]["mod_1"].checked=true;
-			}
-			else if(selectedNo>20000 && selectedNo<29999){
-				document.forms["cform"]["mod_2"].checked=true;
-			}
-			else if(selectedNo>30000 && selectedNo<39999){
-				document.forms["cform"]["mod_3"].checked=true;
-			}
 			
 			insertSelect(this.menu_list,menu_name+"-"+flavor,selectedNo);
 			
 			orderList.push(selectedNo);
 			etcList.push(flavor);
+			
+			orderList.sort();
+			etcList.sort();
 			
 			//Sum Cost
 			cost_sum+=(parseInt(menu_cost)*parseInt(cnt));
@@ -264,7 +248,7 @@
 			<!-- Start Subtitle -->
 			<div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header"> 주문</h1>
+                    <h1 class="page-header"> 주문 - 신화명</h1>
                 </div>
             </div>
             <!-- End Subtitle -->
@@ -276,7 +260,7 @@
                     <div class="panel panel-default">
                     	<!-- Start Panel Head -->
                         <div class="panel-heading">
-                            <i class="fa fa-shopping-cart fa-fw"></i> Input
+                            <i class="fa fa-shopping-cart fa-fw"></i> 주문
                         </div>
                         <!-- End Panel Head -->
                         <!-- Start Panel Body -->
@@ -332,18 +316,18 @@
 									</div>	
 									
 			                       	<form name="cform" id="cform" method="post">
-			                       		<div class="form-group">
-											<label> 구분</label>
-											<label class='radio-inline'>
-											<input type='radio' name='mod' id='mod_1' value='1' checked="checked">신화명</label>
-											<input type='radio' name='mod' id='mod_2' value='2'>물꽁</label>
-											<input type='radio' name='mod' id='mod_3' value='3'>청진동</label>
-										</div>
 										<input type="hidden" id="cust_no" name="cust_no" value="${cust_no }"/>
 										<input type="hidden" id="phone" name="phone" value="${phone }"/>
 										<input type="hidden" id="address" name="address" value="${address }"/>
+										<input type="hidden" id="section" name="section" value="1"/>
 										<input type="hidden" id="orderListValue" name="orderListValue"/>
 										<input type="hidden" id="etcListValue" name="etcListValue"/>
+										<div class="form-group">
+											<label> 결제 수단</label>&nbsp;
+											<label class='radio-inline'><input type="radio" name="pay" id="pay_cash" value="현금" checked="checked">현금</label>
+											<label class='radio-inline'><input type="radio" name="pay" id="pay_credit" value="카드">카드</label>
+											<label class='radio-inline'><input type="radio" name="pay" id="pay_baedal" value="배달의민족">배민</label>
+	                                    </div>
 										<div class="form-group">
 											<label> 주문 내역</label>
 											<select multiple="multiple" class="form-control" id="menu_list" name="menu_list">
@@ -354,7 +338,6 @@
 											<input class="form-control" id="cost_sum" name="cost_sum" type="text" readonly="readonly">
 										</div>
 										<button type="submit" class="btn btn-outline btn-default" onclick="fnAddOrder()"> 주문</button>
-										<button type="reset" class="btn btn-outline btn-default"> 초기화</button>
 									</form>
 								</div>
 								<!-- End left in the Panel -->
@@ -370,7 +353,7 @@
                     <div class="panel panel-default">
                     	<!-- Start Panel Head -->
                         <div class="panel-heading">
-                            <i class="fa fa-shopping-cart fa-fw"></i> Output
+                            <i class="fa fa-shopping-cart fa-fw"></i> 고객 주문 내역
                         </div>
                         <!-- End Panel Head -->
                         <!-- Start Panel Body -->
@@ -383,8 +366,15 @@
 									            <tr>
 									                <th>순번</th>
 									                <th>메뉴</th>
+									                <th>구분</th>
 									            </tr>
 									        </thead>
+									        <tfoot>
+									        	<tr>
+									                <th colspan="2" style="text-align:right">Count:</th>
+									                <th>${cnt }</th>
+									            </tr>
+									        </tfoot>
 									        <tbody>
 									        	<c:forEach items="${sales_List }" var="result" varStatus="status">
 									        		<tr>
@@ -394,17 +384,18 @@
 									        			<td>
 									        				${result.MENU }
 									        			</td>
+									        			<td>
+									        				${result.SECTION }
+									        			</td>
 									        		</tr>
 									        	</c:forEach>
 									        </tbody>
 									    </table>
 		                            </div>
                                 </div>
-                                <!-- /.col-lg-4 (nested) -->
                                 <div class="col-lg-8">
                                     <div id="morris-bar-chart"></div>
                                 </div>
-                                <!-- /.col-lg-8 (nested) -->
                             </div>
                         </div>
                         <!-- End Panel Body -->

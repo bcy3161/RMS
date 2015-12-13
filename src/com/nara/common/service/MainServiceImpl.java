@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Map;
 
 import com.nara.common.dao.MainDao;
+import com.nara.sales.dao.SalesDao;
 
 public class MainServiceImpl implements MainService {
 	
 
 	private MainDao mainDao;
+	private SalesDao salesDao;
 
 
 	public void setMainDao(MainDao mainDao) {
@@ -27,8 +29,8 @@ public class MainServiceImpl implements MainService {
 	/**
 	 * get sum sales in this month
 	 * */
-	public int getSalesSum(Map<String, Object> paramMap){
-		int ret = mainDao.getSalesSum(paramMap);
+	public String getSalesSum(Map<String, Object> paramMap){
+		String ret = mainDao.getSalesSum(paramMap);
 		
 		return ret;
 	}
@@ -47,6 +49,13 @@ public class MainServiceImpl implements MainService {
 	 * */
 	public List getTodaySalesList(Map<String, Object> paramMap){
 		List ret = mainDao.getTodaySalesList(paramMap);
+		
+		return ret;
+	}
+	
+
+	public String getSalesDetail(int sales_no){
+		String ret = salesDao.getSalesDetail(sales_no);
 		
 		return ret;
 	}

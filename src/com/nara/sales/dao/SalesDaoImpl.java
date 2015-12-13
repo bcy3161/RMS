@@ -24,6 +24,30 @@ public class SalesDaoImpl extends SqlSessionDaoSupport implements SalesDao {
 		
 		return ret;
 	}
+
+	/**
+	 * get Between Sales List
+	 * */
+	public List getBetweenList(Map<String, Object> paramMap){
+		List ret = getSqlSession().selectList("sales.getBetweenList", paramMap);
+		
+		return ret;
+	}
+
+	public String getSalesDetail(int sales_no){
+		String ret = getSqlSession().selectOne("sales.getSalesDetail", sales_no);
+		
+		return ret;
+	}
+	
+	/**
+	 * get History about customer
+	 * */
+	public List getHistoryList(Map<String, Object> paramMap){
+		List ret = getSqlSession().selectList("sales.getHistoryList", paramMap);
+		
+		return ret;
+	}
 }
 
 
